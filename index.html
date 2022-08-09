@@ -19,18 +19,18 @@
 
         <section class="column is-full-tablet is-one-third-desktop is-one-quarter-widescreen section">
 
-            <form class="box">
+            <form id="user-form" class="box">
                 <div class="field">
-                    <label class="label is-size-5">Search for a City:</label>
+                    <label for="city" class="label is-size-5">Search for a City:</label>
                     <div class="control has-icons-left">
-                        <input class="input is-rounded" type="text" autofocus="autofocus" placeholder="e.g. Sacramento">
+                        <input name="city" id="city" type="text" autofocus="true" placeholder="e.g. Sacramento" class="input is-rounded" >
                         <span class="icon is-small is-left has-text-grey-light">
                             <ion-icon name="cloud-outline"></ion-icon>
                         </span>
                     </div>
                 </div>
                 
-                <button class="button is-fullwidth is-primary">Search</button>
+                <button type="submit" class="button is-fullwidth is-primary">Search</button>
                 
             </form>
 
@@ -56,7 +56,7 @@
     
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="./assets/index.js"></script>
+    <script src="./assets/script.js"></script>
 
 </body>
 </html>
