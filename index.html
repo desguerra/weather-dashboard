@@ -11,8 +11,8 @@
 
 <body>
 
-    <header class="has-background-link-light">
-        <h1 class="title is-1 has-text-centered has-text-link p-4">Weather Dashboard</h1>
+    <header class="header">
+        <h1 class="title is-1 has-text-centered has-text-white p-4">Weather Dashboard</h1>
     </header>
 
     <main class="columns">
@@ -30,11 +30,11 @@
                     </div>
                 </div>
                 
-                <button class="button is-fullwidth is-link">Search</button>
+                <button class="button is-fullwidth is-primary">Search</button>
                 
             </form>
 
-            <div class="block">
+            <div id="search-history" class="block">
                 search history
             </div>
 
@@ -42,11 +42,11 @@
 
         <section class="column section">
 
-            <div class="block">
+            <div id="current-city" class="block">
                 city - date/icon/temp/wind/humidity/UV index
             </div>
 
-            <div class="block">
+            <div id="forcast" class="block">
                 5-day forcast - date/icon/temp/wind/humidity/UV index
             </div>
             
