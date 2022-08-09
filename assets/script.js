@@ -62,11 +62,13 @@ var getCityWeather = function(data, city) {
 };
 
 var displayWeatherData = function(data, city) {
+
     if (data.length === 0) {
         console.log("no city was found..."); // TODO: make more user friendly
         return;
     }
 
+    // DYNAMICALLY CREATE CURRENT WEATHER INFO + DISPLAY //
     var currentCityDivEl = document.createElement("div");
     currentCityDivEl.classList = "notification p-5";
 
@@ -89,13 +91,13 @@ var displayWeatherData = function(data, city) {
     tempDisplayEl.innerHTML = "Current temperature: " + data.current.temp + " &#176;F";
 
     var windDisplayEl = document.createElement("div");
-    windDisplayEl.textContent = "Wind: " + data.current.wind_speed;
+    windDisplayEl.innerHTML = "Wind: " + data.current.wind_speed;
 
     var humidityDisplayEl = document.createElement("div");
-    humidityDisplayEl.textContent = "Humidity: " + data.current.humidity;
+    humidityDisplayEl.innerHTML = "Humidity: " + data.current.humidity;
 
     var uviDisplayEl = document.createElement("div");
-    uviDisplayEl.textContent = "UV Index: " + data.current.uvi;
+    uviDisplayEl.innerHTML = "UV Index: " + data.current.uvi;
 
     // append all created elements dynamically
     dynamicContainerEl.appendChild(currentCityDivEl);
@@ -115,7 +117,75 @@ var displayWeatherData = function(data, city) {
     // TODO: FIX ICON
     // TODO: FIX UV INDEX COLOR CODING
     // TODO: FIX CURRENT DATE
+    // TODO: MAKE A RESET FUNCTION TO CLEAR DISPLAY BEFORE DISPLAYING MORE
 
+
+
+    // DYNAMICALLY CREATE FORCAST INFO + DISPLAY NEXT 5 DAYS //
+    var forecastTextEl = document.createElement("h3");
+    forecastTextEl.classList = "block title is-4";
+    forecastTextEl.innerText = "5-Day Forecast:";
+    dynamicContainerEl.appendChild(forecastTextEl);
+
+    var forecastEl = document.createElement("div");
+    forecastEl.classList = "block columns";
+    dynamicContainerEl.appendChild(forecastEl);
+
+    // REPEAT 5 TIMES FOR NEXT 5 DAYS
+    for (var i=0; i<5; i++) {
+
+        var colDayEl = document.createElement("div");
+        colDayEl.classList = "column";
+
+        var cardEl = document.createElement("div");
+        cardEl.classList = "card";
+
+        var cardHeaderEl = document.createElement("div");
+        cardHeaderEl.classList = "card-header has-background-dark";
+
+        var cardHeaderTextEl = document.createElement("p");
+        cardHeaderTextEl.classList = "card-header-title has-text-white";
+        cardHeaderTextEl.innerText = "DATE";
+
+        var cardContentEl = document.createElement("div");
+        cardContentEl.classList = "card-content";
+
+        var contentEl = document.createElement("div");
+        contentEl.classList = "content";
+
+        var cardIconDivEl = document.createElement("div");
+        cardIconDivEl.classList = "icon";
+
+        var cardIconEl = document.createElement("ion-icon");
+        cardIconEl.setAttribute("name", "cloud-outline");
+
+        var cardTempEl = document.createElement("div");
+        cardTempEl.innerHTML = "text";
+
+        var cardWindEl = document.createElement("div");
+        cardWindEl.innerHTML = "text";
+
+        var cardHumEl = document.createElement("div");
+        cardHumEl.innerHTML = "text";
+
+        var cardUVEl = document.createElement("div");
+        cardUVEl.innerHTML = "text";
+
+        // append all created elements dynamically
+        forecastEl.appendChild(colDayEl);
+        colDayEl.appendChild(cardEl);
+        cardEl.appendChild(cardHeaderEl);
+        cardHeaderEl.appendChild(cardHeaderTextEl);
+        cardEl.appendChild(cardContentEl);
+        cardContentEl.appendChild(contentEl);
+        contentEl.appendChild(cardIconDivEl);
+        cardIconDivEl.appendChild(cardIconEl);
+        contentEl.appendChild(cardTempEl);
+        contentEl.appendChild(cardWindEl);
+        contentEl.appendChild(cardHumEl);
+        contentEl.appendChild(cardUVEl);
+
+    };
     
 
 };
