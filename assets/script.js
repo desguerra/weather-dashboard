@@ -1,6 +1,8 @@
 var userFormEl = document.querySelector("#user-form"); // get <form> id
 var cityInputEl = document.querySelector("#city"); // get text <input> id
 
+var cityDisplayEl = document.querySelector("#city-display"); // get <span> id
+
 
 var getCityWeather = function(city) {
     // format OpenWeather One Call api url
@@ -10,7 +12,7 @@ var getCityWeather = function(city) {
     fetch(apiUrl)
         .then(function(res) {
             if (res.ok) {
-                displayWeatherData();
+                displayWeatherData(city);
             }
             else {
                 console.log("error: city not found");
@@ -40,8 +42,8 @@ var formSubmitHandler = function(event) {
     }
 };
 
-var displayWeatherData = function() {
-    console.log("display weather data function called...")
+var displayWeatherData = function(city) {
+    cityDisplayEl.textContent = city;
 }
 
 userFormEl.addEventListener("submit", formSubmitHandler);
