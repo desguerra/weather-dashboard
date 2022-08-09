@@ -1,8 +1,13 @@
 var userFormEl = document.querySelector("#user-form"); // get <form> id
 var cityInputEl = document.querySelector("#city"); // get text <input> id
 
-// TODO: TESTING STATIC ID
-var cityDisplayEl = document.querySelector("#city-display"); // get <span> id
+var dynamicContainerEl = document.querySelector("#dynamic-data"); // get <section> id
+
+// var date = new Date();
+// var day = date.getDate();
+// var month = date.getMonth() + 1;
+// var year = date.getFullYear();
+// var currentDate = month + "/" + day + "/" + year
 
 
 var getCityData = function(city) {
@@ -62,9 +67,56 @@ var displayWeatherData = function(data, city) {
         return;
     }
 
+    var currentCityDivEl = document.createElement("div");
+    currentCityDivEl.classList = "notification p-5";
+
+    var currentCityH2El = document.createElement("h2");
+    currentCityH2El.classList = "title is-3";
+
+    var cityDisplayEl = document.createElement("span");
     cityDisplayEl.textContent = city;
-    // .textcontent = current.temp .wind_speed .humidity .uvi
-    // icon = current.weather.icon ??? ex: "01d"
+
+    var dateDisplayEl = document.createElement("span");
+    dateDisplayEl.textContent = " DATE ";
+
+    var iconDisplayEl = document.createElement("span");
+    iconDisplayEl.classList = "icon";
+
+    var iconEl = document.createElement("ion-icon");
+    iconEl.setAttribute("name", "cloud-outline");
+
+    var tempDisplayEl = document.createElement("div");
+    tempDisplayEl.innerHTML = "Current temperature: " + data.current.temp + " &#176;F";
+
+    var windDisplayEl = document.createElement("div");
+    windDisplayEl.textContent = "Wind: " + data.current.wind_speed;
+
+    var humidityDisplayEl = document.createElement("div");
+    humidityDisplayEl.textContent = "Humidity: " + data.current.humidity;
+
+    var uviDisplayEl = document.createElement("div");
+    uviDisplayEl.textContent = "UV Index: " + data.current.uvi;
+
+    // append all created elements dynamically
+    dynamicContainerEl.appendChild(currentCityDivEl);
+
+    currentCityDivEl.appendChild(currentCityH2El);
+
+    currentCityH2El.appendChild(cityDisplayEl);
+    currentCityH2El.appendChild(dateDisplayEl);
+    currentCityH2El.appendChild(iconDisplayEl);
+    iconDisplayEl.appendChild(iconEl);
+
+    currentCityDivEl.appendChild(tempDisplayEl);
+    currentCityDivEl.appendChild(windDisplayEl);
+    currentCityDivEl.appendChild(humidityDisplayEl);
+    currentCityDivEl.appendChild(uviDisplayEl);
+
+    // TODO: FIX ICON
+    // TODO: FIX UV INDEX COLOR CODING
+    // TODO: FIX CURRENT DATE
+
+    
 
 };
 
