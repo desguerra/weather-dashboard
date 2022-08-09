@@ -34,6 +34,7 @@
                 
             </form>
 
+            <!-- SEARCH HISTORY RESULTS -->
             <div id="search-history" class="block">
                 search history
             </div>
@@ -42,12 +43,42 @@
 
         <section class="column section">
 
-            <div id="current-city" class="block">
-                city - date/icon/temp/wind/humidity/UV index
+            <!-- RESULTS FOR WEATHER DATA -->
+            <div id="current-city" class="block p-2">
+                <h2 class="title is-3">
+                    Current weather for <span>City</span> |
+                    <span>Date</span> |
+                    <span>icon</span>
+                </h2>
+                <div>temp</div>
+                <div>wind</div>
+                <div>humidity</div>
+                <div>uv index</div>
+                
             </div>
 
-            <div id="forcast" class="block">
-                5-day forcast - date/icon/temp/wind/humidity/UV index
+            <div id="forcast" class="block columns">
+
+                <!-- card skeleton -->
+                <div class="column">
+                    <div class="card">
+                        <div class="card-header has-background-dark">
+                            <p class="card-header-title has-text-white">
+                                DATE
+                            </p>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <div>icon</div>
+                                <div>temp</div>
+                                <div>wind</div>
+                                <div>humidity</div>
+                                <div>uv index</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             
         </section>
