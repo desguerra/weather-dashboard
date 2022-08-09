@@ -13,7 +13,7 @@ var dynamicContainerEl = document.querySelector("#dynamic-data"); // get <sectio
 var getCityData = function(city) {
     // format OpenWeather Geocoding api url
     // key here, since we won't have a backend to store it for this project
-    var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + ",US&limit=1&appid=" + "9686278b56b94a147e1e2facc0a2671a";
+    var apiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + "9686278b56b94a147e1e2facc0a2671a";
 
     fetch(apiUrl)
         .then(function(res) {
@@ -23,7 +23,7 @@ var getCityData = function(city) {
                 });
             }
             else {
-                console.log("error: city not found"); // TODO: make more user friendly
+                alert("Sorry, Geocoding API data not found!");
             }
         })
         
@@ -35,36 +35,45 @@ var getCityData = function(city) {
 
 var getCityWeather = function(data, city) {
 
-    var lat = data[0].lat.toFixed(2);
-    var lon = data[0].lon.toFixed(2);
+    if (!data[0] && !data[0]) {
+        alert("Sorry, weather data for this search cannot be found!");
+    }
 
-    // format OpenWeather One Call api url
-    // key here, since we won't have a backend to store it for this project
-    var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,daily,alerts&units=imperial&appid=" + "9686278b56b94a147e1e2facc0a2671a";
+    else {
 
-    fetch(url)
-        .then(function(res) {
-            if (res.ok) {
-                res.json().then(function(data) {
-                    console.log(data);
-                    displayWeatherData(data, city);
-                });
-            }
-            else {
-                console.log("error: weather DATA not found"); // TODO: make more user friendly
-            }
-        })
-        
-        .catch(function(err) {
-            console.log("unable to connect to OpenWeather One Call API"); // TODO: make more user friendly
-        });
+        console.log(data);
+
+        var lat = data[0].lat.toFixed(2);
+        var lon = data[0].lon.toFixed(2);
+
+        // format OpenWeather One Call api url
+        // key here, since we won't have a backend to store it for this project
+        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,daily,alerts&units=imperial&appid=" + "9686278b56b94a147e1e2facc0a2671a";
+
+        fetch(url)
+            .then(function(res) {
+                if (res.ok) {
+                    res.json().then(function(data) {
+                        console.log(data);
+                        displayWeatherData(data, city);
+                    });
+                }
+                else {
+                    alert("Sorry, weather data for this search cannot be found!");
+                }
+            })
+            
+            .catch(function(err) {
+                console.log("Unable to connect to OpenWeather One Call API");
+            });
+    }
 
 };
 
 var displayWeatherData = function(data, city) {
 
     if (data.length === 0) {
-        console.log("no city was found..."); // TODO: make more user friendly
+        alert("Sorry, no city was found...");
         return;
     }
 
@@ -91,10 +100,10 @@ var displayWeatherData = function(data, city) {
     tempDisplayEl.innerHTML = "Current temperature: " + data.current.temp + " &#176;F";
 
     var windDisplayEl = document.createElement("div");
-    windDisplayEl.innerHTML = "Wind: " + data.current.wind_speed;
+    windDisplayEl.innerHTML = "Wind: " + data.current.wind_speed + " mph";
 
     var humidityDisplayEl = document.createElement("div");
-    humidityDisplayEl.innerHTML = "Humidity: " + data.current.humidity;
+    humidityDisplayEl.innerHTML = "Humidity: " + data.current.humidity + " %";
 
     var uviDisplayEl = document.createElement("div");
     uviDisplayEl.innerHTML = "UV Index: " + data.current.uvi;
@@ -118,7 +127,6 @@ var displayWeatherData = function(data, city) {
     // TODO: FIX UV INDEX COLOR CODING
     // TODO: FIX CURRENT DATE
     // TODO: MAKE A RESET FUNCTION TO CLEAR DISPLAY BEFORE DISPLAYING MORE
-
 
 
     // DYNAMICALLY CREATE FORCAST INFO + DISPLAY NEXT 5 DAYS //
@@ -160,16 +168,13 @@ var displayWeatherData = function(data, city) {
         cardIconEl.setAttribute("name", "cloud-outline");
 
         var cardTempEl = document.createElement("div");
-        cardTempEl.innerHTML = "text";
+        cardTempEl.innerHTML = "Temp: &#176;F";
 
         var cardWindEl = document.createElement("div");
-        cardWindEl.innerHTML = "text";
+        cardWindEl.innerHTML = "Wind: mph";
 
         var cardHumEl = document.createElement("div");
-        cardHumEl.innerHTML = "text";
-
-        var cardUVEl = document.createElement("div");
-        cardUVEl.innerHTML = "text";
+        cardHumEl.innerHTML = "Humidity: %";
 
         // append all created elements dynamically
         forecastEl.appendChild(colDayEl);
@@ -183,11 +188,9 @@ var displayWeatherData = function(data, city) {
         contentEl.appendChild(cardTempEl);
         contentEl.appendChild(cardWindEl);
         contentEl.appendChild(cardHumEl);
-        contentEl.appendChild(cardUVEl);
 
     };
     
-
 };
 
 var formSubmitHandler = function(event) {
@@ -203,7 +206,7 @@ var formSubmitHandler = function(event) {
         cityInputEl.value = "";
     }
     else {
-        console.log("please enter a city name"); // TODO: make more user friendly
+        alert("Please enter a city name!");
     }
 };
 
