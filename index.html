@@ -11,12 +11,14 @@
 
 <body>
 
-    <header>
-        <h1 class="title is-1 has-text-centered p-4">Weather Dashboard</h1>
+    <header class="has-background-link-light">
+        <h1 class="title is-1 has-text-centered has-text-link p-4">Weather Dashboard</h1>
     </header>
 
     <main class="columns">
+
         <section class="column is-full-tablet is-one-third-desktop is-one-quarter-widescreen section">
+
             <form class="box">
                 <div class="field">
                     <label class="label is-size-5">Search for a City:</label>
@@ -27,10 +29,23 @@
     
                 <button class="button is-fullwidth is-link">Search</button>
             </form>
+
+            <div class="block">
+                search history
+            </div>
+
         </section>
 
         <section class="column section">
-            dynamic
+
+            <div class="block">
+                city - date/icon/temp/wind/humidity/UV index
+            </div>
+
+            <div class="block">
+                5-day forcast - date/icon/temp/wind/humidity/UV index
+            </div>
+            
         </section>
 
     </main>
