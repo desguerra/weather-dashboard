@@ -22,12 +22,16 @@
             <form class="box">
                 <div class="field">
                     <label class="label is-size-5">Search for a City:</label>
-                    <div class="control">
-                        <input class="input is-rounded" type="text" placeholder="e.g. Sacramento">
+                    <div class="control has-icons-left">
+                        <input class="input is-rounded" type="text" autofocus="autofocus" placeholder="e.g. Sacramento">
+                        <span class="icon is-small is-left has-text-grey-light">
+                            <ion-icon name="cloud-outline"></ion-icon>
+                        </span>
                     </div>
                 </div>
-    
+                
                 <button class="button is-fullwidth is-link">Search</button>
+                
             </form>
 
             <div class="block">
@@ -50,6 +54,8 @@
 
     </main>
     
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="./assets/index.js"></script>
 
 </body>
