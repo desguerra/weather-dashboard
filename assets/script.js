@@ -2,6 +2,7 @@ var userFormEl = document.querySelector("#user-form"); // get <form> id
 var cityInputEl = document.querySelector("#city"); // get text <input> id
 var dynamicContainerEl = document.querySelector("#dynamic-data"); // get <section> id
 
+
 /* GET FUNCTIONS */
 var getCityData = function(city) {
     // format OpenWeather Geocoding api url
@@ -75,7 +76,7 @@ var displayCurrentData = function(data, city) {
 
     // DYNAMICALLY CREATE CURRENT WEATHER INFO + DISPLAY //
     var currentCityDivEl = document.createElement("div");
-    currentCityDivEl.classList = "notification p-5";
+    currentCityDivEl.classList = "box p-5";
 
     var currentCityH2El = document.createElement("h2");
     currentCityH2El.classList = "title is-3";
@@ -88,8 +89,8 @@ var displayCurrentData = function(data, city) {
     var dateDisplay = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
     dateDisplayEl.textContent = " " + dateDisplay + " ";
 
-    var iconDisplayEl = document.createElement("span");
-    iconDisplayEl.classList = "icon";
+    var iconDisplayEl = document.createElement("img");
+    iconDisplayEl.setAttribute("src", "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png");
 
     var iconEl = document.createElement("ion-icon");
     iconEl.setAttribute("name", "cloud-outline");
@@ -114,7 +115,7 @@ var displayCurrentData = function(data, city) {
     if (data.current.uvi < 3) {
         uviDisplayEl.classList.add("has-background-success");
         helpUVEl.classList.add("has-text-success");
-        helpUVEl.innerHTML = "Low - but still a good idea to wear sunscreen if the sun is still out.";
+        helpUVEl.innerHTML = "Low - but still a good idea to wear sunscreen if the sun is still up.";
     }
     else if (data.current.uvi < 6) {
         uviDisplayEl.classList.add("has-background-warning");
@@ -155,16 +156,9 @@ var displayCurrentData = function(data, city) {
     uviDisplayLabelEl.appendChild(uviDisplayEl);
     uviDisplayLabelEl.appendChild(helpUVEl);
 
-    // TODO: FIX ICON
-    // TODO: MAKE A RESET FUNCTION TO CLEAR DISPLAY BEFORE DISPLAYING MORE
-
 };
 
 var displayForecastData = function(data) { // TODO: FIX ME!!!!!!!!
-
-    console.log(data);
-    // TODO: FIX ICON
-    // TODO: MAKE A RESET FUNCTION TO CLEAR DISPLAY BEFORE DISPLAYING MORE
 
     // DYNAMICALLY CREATE FORCAST INFO + DISPLAY NEXT 5 DAYS //
     var forecastTextEl = document.createElement("h3");
@@ -200,8 +194,8 @@ var displayForecastData = function(data) { // TODO: FIX ME!!!!!!!!
         var contentEl = document.createElement("div");
         contentEl.classList = "content";
 
-        var cardIconDivEl = document.createElement("div");
-        cardIconDivEl.classList = "icon"; // data.daily[0].weather.icon = "10d"
+        var cardIconDivEl = document.createElement("img");
+        cardIconDivEl.setAttribute("src", "http://openweathermap.org/img/wn/" + data.daily[i + 1].weather[0].icon + ".png");
 
         var cardIconEl = document.createElement("ion-icon");
         cardIconEl.setAttribute("name", "cloud-outline");
