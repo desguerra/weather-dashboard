@@ -3,3 +3,11 @@
 .header {
     background-image: linear-gradient(to bottom right, hsl(217, 71%, 53%), hsl(171, 100%, 41%));
 }
+
+.orange {
+    background: hsl(14, 100%, 53%);
+}
+
+.purple {
+    background: hsl(271, 100%, 71%);
+}

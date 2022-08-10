@@ -105,8 +105,27 @@ var displayWeatherData = function(data, city) {
     var humidityDisplayEl = document.createElement("div");
     humidityDisplayEl.innerHTML = "Humidity: " + data.current.humidity + " %";
 
-    var uviDisplayEl = document.createElement("div");
-    uviDisplayEl.innerHTML = "UV Index: " + data.current.uvi;
+    var uviDisplayLabelEl = document.createElement("div");
+    uviDisplayLabelEl.innerHTML = "UV Index: ";
+    var uviDisplayEl = document.createElement("span");
+    uviDisplayEl.innerHTML = data.current.uvi;
+    uviDisplayEl.classList = "px-2 has-text-white";
+
+    if (data.current.uvi < 3) {
+        uviDisplayEl.classList.add("has-background-success");
+    }
+    else if (data.current.uvi < 6) {
+        uviDisplayEl.classList.add("has-background-warning");
+    }
+    else if (data.current.uvi < 8) {
+        uviDisplayEl.classList.add("orange");
+    }
+    else if (data.current.uvi < 11) {
+        uviDisplayEl.classList.add("has-background-danger");
+    }
+    else {
+        uviDisplayEl.classList.add("purple");
+    }
 
     // append all created elements dynamically
     dynamicContainerEl.appendChild(currentCityDivEl);
@@ -121,10 +140,11 @@ var displayWeatherData = function(data, city) {
     currentCityDivEl.appendChild(tempDisplayEl);
     currentCityDivEl.appendChild(windDisplayEl);
     currentCityDivEl.appendChild(humidityDisplayEl);
-    currentCityDivEl.appendChild(uviDisplayEl);
+    currentCityDivEl.appendChild(uviDisplayLabelEl);
+
+    uviDisplayLabelEl.appendChild(uviDisplayEl);
 
     // TODO: FIX ICON
-    // TODO: FIX UV INDEX COLOR CODING
     // TODO: FIX CURRENT DATE
     // TODO: MAKE A RESET FUNCTION TO CLEAR DISPLAY BEFORE DISPLAYING MORE
 
