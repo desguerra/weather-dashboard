@@ -1,15 +1,8 @@
 var userFormEl = document.querySelector("#user-form"); // get <form> id
 var cityInputEl = document.querySelector("#city"); // get text <input> id
-
 var dynamicContainerEl = document.querySelector("#dynamic-data"); // get <section> id
 
-// var date = new Date();
-// var day = date.getDate();
-// var month = date.getMonth() + 1;
-// var year = date.getFullYear();
-// var currentDate = month + "/" + day + "/" + year
-
-
+/* GET FUNCTIONS */
 var getCityData = function(city) {
     // format OpenWeather Geocoding api url
     // key here, since we won't have a backend to store it for this project
@@ -48,15 +41,14 @@ var getCityWeather = function(data, city) {
 
         // format OpenWeather One Call api url
         // key here, since we won't have a backend to store it for this project
-        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,daily,alerts&units=imperial&appid=" + "9686278b56b94a147e1e2facc0a2671a";
+        var url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + "9686278b56b94a147e1e2facc0a2671a";
 
         fetch(url)
             .then(function(res) {
                 if (res.ok) {
                     res.json().then(function(data) {
-                        console.log(data);
-                        displayWeatherData(data, city);
-                        getCityForecast(lat, lon); ///// TODO: testing
+                        displayCurrentData(data, city);
+                        displayForecastData(data);
                     });
                 }
                 else {
@@ -71,99 +63,10 @@ var getCityWeather = function(data, city) {
 
 };
 
-var getCityForecast = function(lat, lon) {
-    // format OpenWeather 5 day weather api url
-    // key here, since we won't have a backend to store it for this project
-    var url = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + "9686278b56b94a147e1e2facc0a2671a";
+/* DISPLAY FUNCTIONS */
+var displayCurrentData = function(data, city) {
 
-    fetch(url)
-        .then(function(res) {
-            if (res.ok) {
-                res.json().then(function(data) {
-                    displayForecastData(data);
-                });
-            }
-            else {
-                alert("Sorry, 5 Day Weather API data not found!");
-            }
-        })
-        
-        .catch(function(err) {
-            console.log("unable to connect to OpenWeather 5 day weather API"); // TODO: make more user friendly
-        });
-};
-
-var displayForecastData = function(data) { // TODO: FIX ME!!!!!!!!
-
-    console.log(data);
-    // TODO: FIX ICON
-    // TODO: FIX CURRENT DATE
-    // TODO: MAKE A RESET FUNCTION TO CLEAR DISPLAY BEFORE DISPLAYING MORE
-
-    // DYNAMICALLY CREATE FORCAST INFO + DISPLAY NEXT 5 DAYS //
-    var forecastTextEl = document.createElement("h3");
-    forecastTextEl.classList = "block title is-4";
-    forecastTextEl.innerText = "5-Day Forecast:";
-    dynamicContainerEl.appendChild(forecastTextEl);
-
-    var forecastEl = document.createElement("div");
-    forecastEl.classList = "block columns";
-    dynamicContainerEl.appendChild(forecastEl);
-
-    // REPEAT 5 TIMES FOR NEXT 5 DAYS
-    for (var i=0; i<5; i++) {
-
-        var colDayEl = document.createElement("div");
-        colDayEl.classList = "column";
-
-        var cardEl = document.createElement("div");
-        cardEl.classList = "card";
-
-        var cardHeaderEl = document.createElement("div");
-        cardHeaderEl.classList = "card-header has-background-dark";
-
-        var cardHeaderTextEl = document.createElement("p");
-        cardHeaderTextEl.classList = "card-header-title has-text-white";
-        cardHeaderTextEl.innerText = data.list[i].dt_txt;
-
-        var cardContentEl = document.createElement("div");
-        cardContentEl.classList = "card-content";
-
-        var contentEl = document.createElement("div");
-        contentEl.classList = "content";
-
-        var cardIconDivEl = document.createElement("div");
-        cardIconDivEl.classList = "icon";
-
-        var cardIconEl = document.createElement("ion-icon");
-        cardIconEl.setAttribute("name", "cloud-outline");
-
-        var cardTempEl = document.createElement("div");
-        cardTempEl.innerHTML = "Temp: " + data.list[i].main.temp_max + " &#176;F";
-
-        var cardWindEl = document.createElement("div");
-        cardWindEl.innerHTML = "Wind: " + data.list[i].wind.speed + " mph";
-
-        var cardHumEl = document.createElement("div");
-        cardHumEl.innerHTML = "Humidity: " + data.list[i].main.humidity + " %";
-
-        // append all created elements dynamically
-        forecastEl.appendChild(colDayEl);
-        colDayEl.appendChild(cardEl);
-        cardEl.appendChild(cardHeaderEl);
-        cardHeaderEl.appendChild(cardHeaderTextEl);
-        cardEl.appendChild(cardContentEl);
-        cardContentEl.appendChild(contentEl);
-        contentEl.appendChild(cardIconDivEl);
-        cardIconDivEl.appendChild(cardIconEl);
-        contentEl.appendChild(cardTempEl);
-        contentEl.appendChild(cardWindEl);
-        contentEl.appendChild(cardHumEl);
-
-    };
-};
-
-var displayWeatherData = function(data, city) {
+    console.log(data)
 
     if (data.length === 0) {
         alert("Sorry, no city was found...");
@@ -181,7 +84,9 @@ var displayWeatherData = function(data, city) {
     cityDisplayEl.textContent = city;
 
     var dateDisplayEl = document.createElement("span");
-    dateDisplayEl.textContent = " DATE ";
+    var date = new Date(data.current.dt * 1000);
+    var dateDisplay = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+    dateDisplayEl.textContent = " " + dateDisplay + " ";
 
     var iconDisplayEl = document.createElement("span");
     iconDisplayEl.classList = "icon";
@@ -250,15 +155,87 @@ var displayWeatherData = function(data, city) {
     uviDisplayLabelEl.appendChild(uviDisplayEl);
     uviDisplayLabelEl.appendChild(helpUVEl);
 
-    ////// testing: //// displayForecastData(data);
-
     // TODO: FIX ICON
-    // TODO: FIX CURRENT DATE
     // TODO: MAKE A RESET FUNCTION TO CLEAR DISPLAY BEFORE DISPLAYING MORE
-
 
 };
 
+var displayForecastData = function(data) { // TODO: FIX ME!!!!!!!!
+
+    console.log(data);
+    // TODO: FIX ICON
+    // TODO: MAKE A RESET FUNCTION TO CLEAR DISPLAY BEFORE DISPLAYING MORE
+
+    // DYNAMICALLY CREATE FORCAST INFO + DISPLAY NEXT 5 DAYS //
+    var forecastTextEl = document.createElement("h3");
+    forecastTextEl.classList = "block title is-4";
+    forecastTextEl.innerText = "5-Day Forecast:";
+    dynamicContainerEl.appendChild(forecastTextEl);
+
+    var forecastEl = document.createElement("div");
+    forecastEl.classList = "block columns";
+    dynamicContainerEl.appendChild(forecastEl);
+
+    // REPEAT 5 TIMES FOR NEXT 5 DAYS
+    for (var i=0; i<5; i++) {
+
+        var colDayEl = document.createElement("div");
+        colDayEl.classList = "column";
+
+        var cardEl = document.createElement("div");
+        cardEl.classList = "card";
+
+        var cardHeaderEl = document.createElement("div");
+        cardHeaderEl.classList = "card-header has-background-dark";
+
+        var cardHeaderTextEl = document.createElement("p");
+        cardHeaderTextEl.classList = "card-header-title has-text-white";
+        var date = new Date(data.daily[i + 1].dt * 1000);
+        var dateDisplay = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+        cardHeaderTextEl.innerText = dateDisplay;
+
+        var cardContentEl = document.createElement("div");
+        cardContentEl.classList = "card-content";
+
+        var contentEl = document.createElement("div");
+        contentEl.classList = "content";
+
+        var cardIconDivEl = document.createElement("div");
+        cardIconDivEl.classList = "icon"; // data.daily[0].weather.icon = "10d"
+
+        var cardIconEl = document.createElement("ion-icon");
+        cardIconEl.setAttribute("name", "cloud-outline");
+
+        var cardHighEl = document.createElement("div");
+        cardHighEl.innerHTML = "High: " + data.daily[i + 1].temp.max + " &#176;F";
+
+        var cardLowEl = document.createElement("div");
+        cardLowEl.innerHTML = "Low: " + data.daily[i + 1].temp.min + " &#176;F";
+
+        var cardWindEl = document.createElement("div");
+        cardWindEl.innerHTML = "Wind: " + data.daily[i + 1].wind_speed + " mph";
+
+        var cardHumEl = document.createElement("div");
+        cardHumEl.innerHTML = "Humidity: " + data.daily[i + 1].humidity + " %";
+
+        // append all created elements dynamically
+        forecastEl.appendChild(colDayEl);
+        colDayEl.appendChild(cardEl);
+        cardEl.appendChild(cardHeaderEl);
+        cardHeaderEl.appendChild(cardHeaderTextEl);
+        cardEl.appendChild(cardContentEl);
+        cardContentEl.appendChild(contentEl);
+        contentEl.appendChild(cardIconDivEl);
+        cardIconDivEl.appendChild(cardIconEl);
+        contentEl.appendChild(cardHighEl);
+        contentEl.appendChild(cardLowEl);
+        contentEl.appendChild(cardWindEl);
+        contentEl.appendChild(cardHumEl);
+
+    };
+};
+
+/* FORM SUBMIT FUNCTION */
 var formSubmitHandler = function(event) {
     event.preventDefault();
 
