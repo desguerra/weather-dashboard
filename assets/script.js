@@ -25,7 +25,7 @@ var getCityData = function(city) {
         })
         
         .catch(function(err) {
-            console.log("unable to connect to OpenWeather Geocoding API"); // TODO: make more user friendly
+            console.log("unable to connect to OpenWeather Geocoding API");
         });
 
 };
@@ -132,6 +132,9 @@ var displayCurrentData = function(data, city) {
         alert("Sorry, no city was found...");
         return;
     }
+    
+    // reset container
+    dynamicContainerEl.textContent = "";
 
     // DYNAMICALLY CREATE CURRENT WEATHER INFO + DISPLAY //
     var currentCityDivEl = document.createElement("div");
@@ -218,7 +221,7 @@ var displayCurrentData = function(data, city) {
 
 };
 
-var displayForecastData = function(data) { // TODO: FIX ME!!!!!!!!
+var displayForecastData = function(data) {
 
     // DYNAMICALLY CREATE FORCAST INFO + DISPLAY NEXT 5 DAYS //
     var forecastTextEl = document.createElement("h3");
