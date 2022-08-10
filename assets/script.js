@@ -150,6 +150,7 @@ var displayCurrentData = function(data, city) {
 
     var iconDisplayEl = document.createElement("img");
     iconDisplayEl.setAttribute("src", "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png");
+    iconDisplayEl.setAttribute("alt", data.current.weather[0].description + " icon");
 
     var iconEl = document.createElement("ion-icon");
     iconEl.setAttribute("name", "cloud-outline");
@@ -255,6 +256,7 @@ var displayForecastData = function(data) { // TODO: FIX ME!!!!!!!!
 
         var cardIconDivEl = document.createElement("img");
         cardIconDivEl.setAttribute("src", "http://openweathermap.org/img/wn/" + data.daily[i + 1].weather[0].icon + ".png");
+        cardIconDivEl.setAttribute("alt", data.daily[i + 1].weather[0].description + " icon");
 
         var cardIconEl = document.createElement("ion-icon");
         cardIconEl.setAttribute("name", "cloud-outline");
