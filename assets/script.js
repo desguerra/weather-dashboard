@@ -1,6 +1,9 @@
 var userFormEl = document.querySelector("#user-form"); // get <form> id
 var cityInputEl = document.querySelector("#city"); // get text <input> id
+var historyContainerEl = document.querySelector("#search-history"); // get <section> id
 var dynamicContainerEl = document.querySelector("#dynamic-data"); // get <section> id
+
+var searchHistoryList = [];
 
 
 /* GET FUNCTIONS */
@@ -48,6 +51,7 @@ var getCityWeather = function(data, city) {
             .then(function(res) {
                 if (res.ok) {
                     res.json().then(function(data) {
+                        displaySearchHistory(city);
                         displayCurrentData(data, city);
                         displayForecastData(data);
                     });
@@ -65,6 +69,17 @@ var getCityWeather = function(data, city) {
 };
 
 /* DISPLAY FUNCTIONS */
+var displaySearchHistory = function(city) {
+
+    // DYNAMICALLY CREATE SEARCH HISTORY + DISPLAY //
+    var citySearchEl = document.createElement("div");
+    citySearchEl.innerHTML = city;
+    citySearchEl.classList = "notification";
+
+    historyContainerEl.appendChild(citySearchEl);
+
+};
+
 var displayCurrentData = function(data, city) {
 
     console.log(data)

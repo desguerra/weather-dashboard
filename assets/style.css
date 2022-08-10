@@ -19,3 +19,7 @@
 .purple {
     background: hsl(271, 100%, 71%);
 }
+
+.center {
+    text-align: center;
+}
