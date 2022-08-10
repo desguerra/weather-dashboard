@@ -3,6 +3,8 @@ var cityInputEl = document.querySelector("#city"); // get text <input> id
 var historyContainerEl = document.querySelector("#search-history"); // get <section> id
 var dynamicContainerEl = document.querySelector("#dynamic-data"); // get <section> id
 
+var resetBtn = document.querySelector("#reset-btn");
+
 
 /* GET FUNCTIONS */
 var getCityData = function(city) {
@@ -304,7 +306,14 @@ var formSubmitHandler = function(event) {
     }
 };
 
+var clearHistory = function() {
+    localStorage.clear();
+    location.reload();
+};
+
 /* INITIAL FUNCTIONS */
 displaySearchHistoryInit();
 
+/* BUTTON EVENT LISTENERS */
 userFormEl.addEventListener("submit", formSubmitHandler);
+resetBtn.addEventListener("click", clearHistory);
