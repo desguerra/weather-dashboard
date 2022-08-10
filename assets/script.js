@@ -3,8 +3,6 @@ var cityInputEl = document.querySelector("#city"); // get text <input> id
 var historyContainerEl = document.querySelector("#search-history"); // get <section> id
 var dynamicContainerEl = document.querySelector("#dynamic-data"); // get <section> id
 
-var searchHistoryList = [];
-
 
 /* GET FUNCTIONS */
 var getCityData = function(city) {
@@ -51,7 +49,8 @@ var getCityWeather = function(data, city) {
             .then(function(res) {
                 if (res.ok) {
                     res.json().then(function(data) {
-                        displaySearchHistory(city);
+                        //displaySearchHistory(city);
+                        addToHistory(city);
                         displayCurrentData(data, city);
                         displayForecastData(data);
                     });
@@ -68,16 +67,59 @@ var getCityWeather = function(data, city) {
 
 };
 
+var addToHistory = function(city) {
+
+    // store searched city in `localStorage` if city exists
+    if (city) {
+
+        if (localStorage.getItem("cities")) {
+            var searchHistoryList = localStorage.getItem("cities");
+        }
+        else {
+            var searchHistoryList = [];
+        }
+
+        var newSearch = city;
+
+        localStorage.setItem("cities", [...[searchHistoryList], newSearch]);
+    }
+
+    displaySearchHistory();
+    
+};
+
 /* DISPLAY FUNCTIONS */
-var displaySearchHistory = function(city) {
+var displaySearchHistoryInit = function() {
 
-    // DYNAMICALLY CREATE SEARCH HISTORY + DISPLAY //
-    var citySearchEl = document.createElement("div");
-    citySearchEl.innerHTML = city;
-    citySearchEl.classList = "notification";
+    // DYNAMICALLY CREATE SEARCH HISTORY + DISPLAY ON FIRST LOAD //
 
-    historyContainerEl.appendChild(citySearchEl);
+    if (localStorage.getItem("cities")) {
+        var searchHistoryList = localStorage.getItem("cities").split(',');
 
+        for (var i=1; i < searchHistoryList.length; i++) {
+            var citySearchEl = document.createElement("div");
+            citySearchEl.classList = "notification";
+            citySearchEl.textContent = searchHistoryList[i];
+
+            historyContainerEl.appendChild(citySearchEl);
+        };
+    }
+};
+
+var displaySearchHistory = function() {
+
+    if (localStorage.getItem("cities")) {
+        var searchHistoryList = localStorage.getItem("cities").split(',');
+
+        for (var i=1; i < searchHistoryList.length; i++) {
+            var citySearchEl = document.createElement("div");
+            citySearchEl.classList = "notification";
+            citySearchEl.textContent = searchHistoryList[i];
+        };
+
+        historyContainerEl.appendChild(citySearchEl);
+
+    }
 };
 
 var displayCurrentData = function(data, city) {
@@ -261,5 +303,8 @@ var formSubmitHandler = function(event) {
         alert("Please enter a city name!");
     }
 };
+
+/* INITIAL FUNCTIONS */
+displaySearchHistoryInit();
 
 userFormEl.addEventListener("submit", formSubmitHandler);
