@@ -4,6 +4,14 @@
     background-image: linear-gradient(to bottom right, hsl(217, 71%, 53%), hsl(171, 100%, 41%));
 }
 
+.text-orange {
+    color:hsl(14, 100%, 53%);
+}
+
+.text-purple {
+    color: hsl(271, 100%, 71%);
+}
+
 .orange {
     background: hsl(14, 100%, 53%);
 }
