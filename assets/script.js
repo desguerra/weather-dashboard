@@ -90,6 +90,11 @@ var addToHistory = function(city) {
     
 };
 
+var test = function(event) {
+    var cityNameBtn= event.target.textContent;
+    getCityData(cityNameBtn);
+};
+
 /* DISPLAY FUNCTIONS */
 var displaySearchHistoryInit = function() {
 
@@ -99,12 +104,19 @@ var displaySearchHistoryInit = function() {
         var searchHistoryList = localStorage.getItem("cities").split(',');
 
         for (var i=1; i < searchHistoryList.length; i++) {
-            var citySearchEl = document.createElement("div");
-            citySearchEl.classList = "notification";
+            var citySearchContainer = document.createElement("div");
+
+            var citySearchEl = document.createElement("button");
+            citySearchEl.classList = "button is-light is-fullwidth my-2";
             citySearchEl.textContent = searchHistoryList[i];
 
-            historyContainerEl.appendChild(citySearchEl);
+            citySearchContainer.appendChild(citySearchEl);
+            historyContainerEl.appendChild(citySearchContainer);
+
+            citySearchEl.addEventListener("click", test);
+            
         };
+
     }
 };
 
@@ -114,12 +126,17 @@ var displaySearchHistory = function() {
         var searchHistoryList = localStorage.getItem("cities").split(',');
 
         for (var i=1; i < searchHistoryList.length; i++) {
-            var citySearchEl = document.createElement("div");
-            citySearchEl.classList = "notification";
+            var citySearchContainer = document.createElement("div");
+
+            var citySearchEl = document.createElement("button");
+            citySearchEl.classList = "button is-light is-fullwidth my-2";
             citySearchEl.textContent = searchHistoryList[i];
+
+            citySearchContainer.appendChild(citySearchEl);
+            citySearchEl.addEventListener("click", test);
         };
 
-        historyContainerEl.appendChild(citySearchEl);
+        historyContainerEl.appendChild(citySearchContainer);
 
     }
 };
