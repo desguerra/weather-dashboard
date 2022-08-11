@@ -247,7 +247,7 @@ var displayForecastData = function(data) {
     dynamicContainerEl.appendChild(forecastTextEl);
 
     var forecastEl = document.createElement("div");
-    forecastEl.classList = "block columns";
+    forecastEl.classList = "block columns is-variable is-1-desktop is-3-fullhd is-desktop";
     dynamicContainerEl.appendChild(forecastEl);
 
     // REPEAT 5 TIMES FOR NEXT 5 DAYS
@@ -282,10 +282,10 @@ var displayForecastData = function(data) {
         cardIconEl.setAttribute("name", "cloud-outline");
 
         var cardHighEl = document.createElement("div");
-        cardHighEl.innerHTML = "High: " + data.daily[i + 1].temp.max + " &#176;F";
+        cardHighEl.innerHTML = "H: " + data.daily[i + 1].temp.max + " &#176;F";
 
         var cardLowEl = document.createElement("div");
-        cardLowEl.innerHTML = "Low: " + data.daily[i + 1].temp.min + " &#176;F";
+        cardLowEl.innerHTML = "L: " + data.daily[i + 1].temp.min + " &#176;F";
 
         var cardWindEl = document.createElement("div");
         cardWindEl.innerHTML = "Wind: " + data.daily[i + 1].wind_speed + " mph";
