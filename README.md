@@ -19,6 +19,7 @@ Implemented features:
 In addition, I have:
 
 * deployed the live [URL](https://desguerra.github.io/weather-dashboard/)
+* utilized [Bulma CSS](https://bulma.io/) framework for responsiveness and a more contemporary feel
 * created a "clear history" button
 * added help text corresponding to the current UV index of the city
 * modified the application to resemble the mock-up functionality
