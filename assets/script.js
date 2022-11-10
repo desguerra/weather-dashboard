@@ -51,7 +51,7 @@ var getCityWeather = function(data, city) {
             .then(function(res) {
                 if (res.ok) {
                     res.json().then(function(data) {
-                        //displaySearchHistory(city);
+                        //displaySearchHistory();
                         addToHistory(city);
                         displayCurrentData(data, city);
                         displayForecastData(data);
@@ -83,10 +83,14 @@ var addToHistory = function(city) {
 
         var newSearch = city;
 
-        localStorage.setItem("cities", [...[searchHistoryList], newSearch]);
+        // IF newSearch IS IN LIST, THEN DO NOT ADD AGAIN
+        if (searchHistoryList.includes(newSearch)) {
+            console.log(newSearch + " is already in the list...");
+        }
+        else {
+            localStorage.setItem("cities", [...[searchHistoryList], newSearch]);
+        }
     }
-
-    displaySearchHistory();
     
 };
 
@@ -96,37 +100,18 @@ var test = function(event) {
 };
 
 /* DISPLAY FUNCTIONS */
-var displaySearchHistoryInit = function() {
-
-    // DYNAMICALLY CREATE SEARCH HISTORY + DISPLAY ON FIRST LOAD //
-
-    if (localStorage.getItem("cities")) {
-        var searchHistoryList = localStorage.getItem("cities").split(',');
-
-        for (var i=1; i < searchHistoryList.length; i++) {
-            var citySearchContainer = document.createElement("div");
-
-            var citySearchEl = document.createElement("button");
-            citySearchEl.classList = "button is-light is-fullwidth my-2";
-            citySearchEl.textContent = searchHistoryList[i];
-
-            citySearchContainer.appendChild(citySearchEl);
-            historyContainerEl.appendChild(citySearchContainer);
-
-            citySearchEl.addEventListener("click", test);
-            
-        };
-
-    }
-};
 
 var displaySearchHistory = function() {
 
     if (localStorage.getItem("cities")) {
+
+        historyContainerEl.textContent = '';
+
+        var citySearchContainer = document.createElement("div");
+
         var searchHistoryList = localStorage.getItem("cities").split(',');
 
         for (var i=1; i < searchHistoryList.length; i++) {
-            var citySearchContainer = document.createElement("div");
 
             var citySearchEl = document.createElement("button");
             citySearchEl.classList = "button is-light is-fullwidth my-2";
@@ -308,6 +293,7 @@ var displayForecastData = function(data) {
         contentEl.appendChild(cardHumEl);
 
     };
+    displaySearchHistory();
 };
 
 /* FORM SUBMIT FUNCTION */
@@ -334,7 +320,7 @@ var clearHistory = function() {
 };
 
 /* INITIAL FUNCTIONS */
-displaySearchHistoryInit();
+displaySearchHistory();
 
 /* BUTTON EVENT LISTENERS */
 userFormEl.addEventListener("submit", formSubmitHandler);
